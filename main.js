@@ -2,6 +2,7 @@ const youtubedl = require('youtube-dl')
 const fs = require('fs')
 let best_width = 0 ;
 let best_format_id  ;
+let output = "output.mp4" ;
 
 if (process.argv.length < 3) {
 		console.error('No media url provided') ;
@@ -27,10 +28,15 @@ if (process.argv.length < 3) {
 						console.log('format:'+format.format+' format_id:', format.format_id, format.width) ;
 				}) ;
 				console.log('BEST FORMAT:' + best_format_id) ;
-				let downloaded = 0 ;
 
-				if (fs.existsSync(info._filename)) {
-						downloaded = fs.statSync(info._filename).size
+				let downloaded = 0 ;
+				if (process.argv[3]) {
+						output = process.argv[3] ;
+				} else {
+						output = info._filename ;
+				}
+				if (fs.existsSync(output)) {
+						downloaded = fs.statSync(output).size
 				}
 
 				const video = youtubedl(url,
@@ -42,7 +48,7 @@ if (process.argv.length < 3) {
 				// Will be called when the download starts.
 				video.on('info', function(info) {
 						console.log('Download started')
-						console.log('filename: ' + info._filename)
+						console.log('filename: ' + info._filename + ' to:' + output)
 
 						// info.size will be the amount to download, add
 						let total = info.size + downloaded
@@ -57,7 +63,7 @@ if (process.argv.length < 3) {
 						}
 				})
 
-				video.pipe(fs.createWriteStream(info._filename, { flags: 'a' }))
+				video.pipe(fs.createWriteStream(output, { flags: 'a' }))
 
 				// Will be called if download was already completed and there is nothing more to download.
 				video.on('complete', function complete(info) {
