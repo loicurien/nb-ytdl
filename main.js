@@ -1,6 +1,7 @@
 const youtubedl = require('youtube-dl')
 const fs = require('fs')
 let best_width = 0 ;
+let max_width = 1920 ;
 let best_format_id  ;
 let output = "output.mp4" ;
 
@@ -21,7 +22,7 @@ if (process.argv.length < 3) {
 				console.log('filename:', info._filename) ;
 				console.log('format id:', info.format_id) ;
 				info.formats.map( (format) => {
-						if( format.width > best_width && format.ext === 'mp4') {
+						if( format.width > best_width && format.width <= max_width && format.ext === 'mp4') {
 								best_width = format.width ;
 								best_format_id = format.format_id ;
 						}
@@ -41,7 +42,7 @@ if (process.argv.length < 3) {
 
 				const video = youtubedl(url,
 						// Optional arguments passed to youtube-dl.
-						['--format=best'],
+						['--format=' + best_format_id],
 						// start will be sent as a range header
 						{ start: downloaded, cwd: __dirname })
 
