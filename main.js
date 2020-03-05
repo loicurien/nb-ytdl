@@ -1,7 +1,7 @@
 const youtubedl = require('youtube-dl')
 const fs = require('fs')
 let best_width = 0 ;
-let max_width = 2560 ;
+let max_width = 1920 ;
 let best_format_id  ;
 let output = "output.mp4" ;
 
