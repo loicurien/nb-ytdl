@@ -25,7 +25,7 @@ if (process.argv.length < 3) {
 				console.log('filename:', info._filename) ;
 				console.log('format id:', info.format_id) ;
 				info.formats.map( (format) => {
-						if( format.width > best_width && format.width <= max_width && format.ext === 'mp4' && format.acodec !== 'none') {
+						if( format.width > best_width && format.width <= max_width && format.ext === 'mp4') {
 								best_width = format.width ;
 								best_format_id = format.format_id ;
 						}
