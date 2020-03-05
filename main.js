@@ -1,7 +1,7 @@
 const youtubedl = require('youtube-dl')
 const fs = require('fs')
 let best_width = 0 ;
-let max_width = 1920 ;
+let max_width = 1000000 ;
 let best_format_id  ;
 let output = "output.mp4" ;
 
@@ -9,6 +9,9 @@ if (process.argv.length < 3) {
 		console.error('No media url provided') ;
 } else {
 		const url = process.argv[2] ;
+		if (process.argv[4]) {
+				max_width = process.argv[4] ;
+		}
 		console.error('Reading infos : ' + url) ;
 		console.time('infos') ;
 		youtubedl.getInfo(url, (err, info) => {
