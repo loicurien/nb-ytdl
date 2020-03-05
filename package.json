@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
     "youtube-dl": "^3.0.2"
   },
   "devDependencies": {},
